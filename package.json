@@ -1,0 +1,23 @@
+{
+  "name": "yujia-online-storage-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rockjia1996/yujia-online-storage-backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rockjia1996/yujia-online-storage-backend/issues"
+  },
+  "homepage": "https://github.com/rockjia1996/yujia-online-storage-backend#readme",
+  "dependencies": {
+    "express": "^4.17.2",
+    "joi": "^17.5.0"
+  }
+}
