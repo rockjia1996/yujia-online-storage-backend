@@ -18,6 +18,7 @@
   "homepage": "https://github.com/rockjia1996/yujia-online-storage-backend#readme",
   "dependencies": {
     "express": "^4.17.2",
-    "joi": "^17.5.0"
+    "joi": "^17.5.0",
+    "multer": "^1.4.4"
   }
 }

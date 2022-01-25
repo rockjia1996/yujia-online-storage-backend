@@ -1,0 +1,13 @@
+.login-container {
+  background: grey;
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-form {
+  font-size: x-large;
+}

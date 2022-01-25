@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Testing Upload Page</title>
+    <link rel="stylesheet" href="/css/upload-stylesheet.css" />
+  </head>
+  <body>
+    <div class="container">
+      <form
+        class="upload-panel"
+        action="/api/upload"
+        method="POST"
+        enctype="multipart/form-data"
+      >
+        <label for="upload-file">Select a File</label> <br />
+        <input type="file" id="upload-file" name="upload-file" /> <br />
+        <br />
+        <button id="ajaxBtn" type="submit">Make a request</button>
+      </form>
+    </div>
+
+    <script src="/js/upload.js"></script>
+  </body>
+</html>
