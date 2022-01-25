@@ -1,9 +1,20 @@
 const mongoose = require("mongoose");
 
-mongoose
-  .connect("mongodb://localhost/file_tracking_db")
-  .then(() => console.log("Connected to MongoDB..."))
-  .catch((error) => console.error("Could not connnect to MongoDB..."));
+// Connect to the MongoDB database
+function connectDB() {
+  mongoose
+    .connect("mongodb://localhost/file_tracking_db")
+    .then(() => console.log("Connected to MongoDB..."))
+    .catch((error) => console.error("Could not connnect to MongoDB..."));
+}
+
+// Close the connection to the database
+function closeConnection() {
+  mongoose.connection.close();
+}
+
+// Connect to Database now
+connectDB();
 
 // Define a trackerSchema to specify how to track the file
 const trackerSchema = new mongoose.Schema({
@@ -43,13 +54,9 @@ async function deleteTracker(filename, owner) {
   return result;
 }
 
-// Close the connection to the database
-function closeConnection() {
-  mongoose.connection.close();
-}
-
-//createTracker("test1.txt", "Yu Jia");
-//createTracker("test2.txt", "Yu Jia");
-
-//deleteTracker("test1.txt", "Yu Jia");
-//deleteTracker("test2.txt", "Yu Jia");
+module.exports = {
+  createTracker,
+  getTracker,
+  deleteTracker,
+  closeConnection,
+};
