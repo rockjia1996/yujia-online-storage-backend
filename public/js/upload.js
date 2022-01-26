@@ -1,5 +1,3 @@
-/*
-
 document.getElementById("ajaxBtn").addEventListener("click", sendFile);
 let httpRequest;
 
@@ -12,18 +10,20 @@ async function sendFile() {
 
   httpRequest.onreadystatechange = uploadStatus;
 
+  // Create a new FormData obj and get the
+  // file from the form
+  const formData = new FormData();
   const file = document.getElementById("upload-file");
-  console.log(file);
-  console.log("File Name: ", file.files[0]);
 
-  const reader = new FileReader();
-  reader.addEventListener("loadend", () => {
-    console.log(reader.result);
-    httpRequest.open("POST", "http://localhost:3333/check", true);
-    httpRequest.setRequestHeader("Content-Type", "multipart/form-data");
-    httpRequest.send(reader.result);
-  });
-  reader.readAsBinaryString(file.files[0]);
+  // Append the selected file
+  // file.files is an array, since this is single
+  // file upload, so the first on file is the
+  // selected file
+  formData.append("upload-file", file.files[0]);
+
+  // Setup the reqeest type, and address
+  httpRequest.open("POST", "/api/upload/file", true);
+  httpRequest.send(formData);
 }
 
 function uploadStatus() {
@@ -35,5 +35,3 @@ function uploadStatus() {
     }
   }
 }
-
-*/
