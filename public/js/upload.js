@@ -22,7 +22,7 @@ async function sendFile() {
   formData.append("upload-file", file.files[0]);
 
   // Setup the reqeest type, and address
-  httpRequest.open("POST", "/api/upload/file", true);
+  httpRequest.open("POST", "/api/upload", true);
   httpRequest.send(formData);
 }
 

@@ -20,7 +20,6 @@ connectDB();
 const trackerSchema = new mongoose.Schema({
   filename: String,
   owner: String,
-  path: String,
   date: { type: Date, default: Date.now },
 });
 

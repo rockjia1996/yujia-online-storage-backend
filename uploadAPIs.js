@@ -4,7 +4,7 @@ const multer = require("multer");
 // Configure the rules for saving location and names
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "upload");
+    cb(null, `upload/${req.session.username}`);
   },
   filename: (req, file, cb) => {
     cb(null, file.originalname);
@@ -15,6 +15,6 @@ const storage = multer.diskStorage({
 const router = express.Router();
 const upload = multer({ storage: storage });
 
-router.post("/file", upload.single("upload-file"), (req, res) => {});
+router.post("/api/upload", upload.single("upload-file"), (req, res) => {});
 
 module.exports = router;
