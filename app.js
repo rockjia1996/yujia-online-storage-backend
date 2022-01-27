@@ -1,10 +1,23 @@
 const express = require("express");
 const session = require("express-session");
+const MongoDBStore = require("connect-mongodb-session")(session);
 const upload = require("./uploadAPIs");
 const logger = require("./loggerAPIs");
 
 const server = express();
 const port = process.env.PORT || 3333;
+
+// Save the session into MongoDB with connect-mongodb-session package
+// Learn More: https://github.com/mongodb-js/connect-mongodb-session
+let store = new MongoDBStore({
+  uri: "mongodb://localhost:27017/connect_mongodb_session_test",
+  collection: "mySessions",
+});
+
+// Catch errors
+store.on("error", function (error) {
+  console.log(error);
+});
 
 /*
   Adding a session middleware from express-session.
@@ -22,8 +35,12 @@ const port = process.env.PORT || 3333;
 server.use(
   session({
     secret: "keyboard cat",
+    cookie: {
+      maxAge: 1000 * 60 * 1, // 1000 * 60 * 60 * 24,
+    },
     resave: false,
     saveUninitialized: false,
+    store: store,
   })
 );
 
