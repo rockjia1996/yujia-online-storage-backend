@@ -13,6 +13,7 @@ function closeConnection() {
 
 connectDB();
 
+// The schema for a user document
 const loginSchema = new mongoose.Schema({
   username: String,
   password: String,
@@ -35,6 +36,7 @@ async function createUser(username, password) {
   return await user.save();
 }
 
+// Verify the provided information against database
 async function verifyUser(username, password) {
   const user = await Logger.find({
     username: username,
@@ -45,6 +47,7 @@ async function verifyUser(username, password) {
   } else console.log("not verified");
 }
 
+// Delete user from the database
 async function deleteUser(username) {
   const user = await Logger.findOne({ username: username });
   return await Logger.deleteOne(user._id);

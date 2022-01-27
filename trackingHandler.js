@@ -53,6 +53,12 @@ async function deleteTracker(filename, owner) {
   return result;
 }
 
+function findUserFiles(owner) {
+  const trackers = await FileTracker.find({
+    owner: owner,
+  }).select({ filename: 1 });
+}
+
 module.exports = {
   createTracker,
   getTracker,
