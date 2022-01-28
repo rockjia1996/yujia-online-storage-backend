@@ -2,7 +2,7 @@ const express = require("express");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
 const upload = require("./uploadAPIs");
-const logger = require("./loggerAPIs");
+const logger = require("./loginAPIs");
 
 const server = express();
 const port = process.env.PORT || 3333;
@@ -36,7 +36,7 @@ server.use(
   session({
     secret: "keyboard cat",
     cookie: {
-      maxAge: 1000 * 60 * 1, // 1000 * 60 * 60 * 24,
+      maxAge: 1000 * 60 * 5, // 1000 * 60 * 60 * 24,
     },
     resave: false,
     saveUninitialized: false,
@@ -91,7 +91,6 @@ server.get("/login", (req, res) => {
   the /upload route.
 */
 server.get("/upload", isAuth, (req, res) => {
-  console.log(req.session.username);
   res.sendFile(__dirname + "/views/upload.html");
 });
 

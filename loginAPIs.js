@@ -1,6 +1,8 @@
 const express = require("express");
 const fs = require("fs");
 const validateLogin = require("./inputValidation");
+const loginHandler = require("./loginHandler");
+
 const router = express.Router();
 
 /*
@@ -9,15 +11,21 @@ const router = express.Router();
   username will be set in req.session. Also it creates
   a storage folder for the user.
 */
-router.post("/api/validate", (req, res) => {
+router.post("/api/validate", async (req, res) => {
   const user = req.body;
   const valid = validateLogin(user);
 
   if (valid) {
-    req.session.isAuth = true;
-    req.session.username = user.username;
-    fs.mkdirSync(`upload/${req.session.username}`, { recursive: true });
-    res.redirect("/upload");
+    const result = await loginHandler.verifyUser(user.username, user.password);
+    if (result) {
+      req.session.isAuth = true;
+      req.session.username = user.username;
+
+      fs.mkdirSync(`upload/${req.session.username}`, { recursive: true });
+      res.redirect("/upload");
+    } else {
+      res.redirect("/login");
+    }
   } else res.redirect("/login");
 });
 

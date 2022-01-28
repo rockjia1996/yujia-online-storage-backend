@@ -1,6 +1,8 @@
 document.getElementById("ajaxBtn").addEventListener("click", sendFile);
 let httpRequest;
 
+getFileList();
+
 async function sendFile() {
   httpRequest = new XMLHttpRequest();
   if (!httpRequest) {
@@ -30,7 +32,6 @@ function uploadStatus() {
   // If the response is success, we add the file to the list
   if (httpRequest.readyState === XMLHttpRequest.DONE) {
     if (httpRequest.status === 200) {
-      alert(httpRequest.responseText);
       const item = document.createElement("p");
 
       const file = document.getElementById("upload-file");
@@ -39,7 +40,34 @@ function uploadStatus() {
       const element = document.getElementById("files-list");
       element.appendChild(item);
     } else {
-      alert("There was a problem with the request.");
+      alert("There was a problem with the request. Please try to login again!");
     }
   }
+}
+
+function getFileList() {
+  const request = new XMLHttpRequest();
+  if (!request) {
+    alert("Giving up: (Cannot create an XMLHTTP instance");
+    return false;
+  }
+
+  request.onreadystatechange = () => {
+    if (request.readyState === XMLHttpRequest.DONE) {
+      const filenames = request.response.split("/");
+
+      filenames.forEach((name) => {
+        const item = document.createElement("p");
+        const file = document.getElementById("upload-file");
+        const node = document.createTextNode(name);
+        item.appendChild(node);
+        const element = document.getElementById("files-list");
+        element.appendChild(item);
+      });
+    }
+  };
+
+  request.open("GET", "/api/upload/file-list");
+  request.responseType = "text";
+  request.send();
 }

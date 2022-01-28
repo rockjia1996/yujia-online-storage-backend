@@ -9,7 +9,6 @@ const loginSchema = Joi.object({
 // Check the info that user provides is in correct format.
 function validateLogin(user) {
   const result = loginSchema.validate(user);
-  console.log(result);
   if (!result.error) return true;
   else return false;
 }

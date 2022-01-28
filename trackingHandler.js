@@ -3,9 +3,11 @@ const mongoose = require("mongoose");
 // Connect to the MongoDB database
 function connectDB() {
   mongoose
-    .connect("mongodb://localhost/file_tracking_db")
-    .then(() => console.log("Connected to MongoDB..."))
-    .catch((error) => console.error("Could not connnect to MongoDB..."));
+    .connect("mongodb://localhost/yujia-online-storage-db")
+    .then(() => console.log("(trackingHandler)  Connected to MongoDB..."))
+    .catch((error) =>
+      console.error("(trackingHandler)  Could not connnect to MongoDB...")
+    );
 }
 
 // Close the connection to the database
@@ -53,15 +55,19 @@ async function deleteTracker(filename, owner) {
   return result;
 }
 
-function findUserFiles(owner) {
+async function findUserFiles(owner) {
   const trackers = await FileTracker.find({
     owner: owner,
   }).select({ filename: 1 });
+
+  console.log(trackers);
+  return trackers;
 }
 
 module.exports = {
   createTracker,
   getTracker,
   deleteTracker,
+  findUserFiles,
   closeConnection,
 };

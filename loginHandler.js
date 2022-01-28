@@ -1,10 +1,13 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
 function connectDB() {
   mongoose
-    .connect("mongodb://localhost/login_db")
-    .then(() => console.log("Connected to MongoDB..."))
-    .catch((error) => console.error("Could not connect to MongDB..."));
+    .connect("mongodb://localhost/yujia-online-storage-db")
+    .then(() => console.log("(loginHandler) Connected to MongoDB..."))
+    .catch((error) => {
+      console.error("(loginHandler) Could not connect to MongDB...");
+    });
 }
 
 function closeConnection() {
@@ -17,20 +20,17 @@ connectDB();
 const loginSchema = new mongoose.Schema({
   username: String,
   password: String,
-  salt: String,
 });
 
 const Logger = mongoose.model("Login", loginSchema);
 
 async function createUser(username, password) {
-  // For Now, it is plain text, in the future,
-  // these fields will be filled by hashes
-  // Also the username should be unique, so
-  // no two users have the same name
+  const saltRounds = 10;
+  const hash = await bcrypt.hash(password, saltRounds);
+
   const user = new Logger({
     username: username,
-    password: password,
-    salt: "just a placeholder",
+    password: hash,
   });
 
   return await user.save();
@@ -41,10 +41,8 @@ async function verifyUser(username, password) {
   const user = await Logger.find({
     username: username,
   });
-
-  if (user[0].password === password) {
-    console.log("verified");
-  } else console.log("not verified");
+  const result = await bcrypt.compare(password, user[0].password);
+  return result;
 }
 
 // Delete user from the database
@@ -53,6 +51,12 @@ async function deleteUser(username) {
   return await Logger.deleteOne(user._id);
 }
 
-createUser("guest", "123");
+//createUser("guest", "123");
 //verifyUser("guest", "123");
 //deleteUser("guest");
+
+module.exports = {
+  createUser,
+  verifyUser,
+  deleteUser,
+};
