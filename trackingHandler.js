@@ -55,12 +55,12 @@ async function deleteTracker(filename, owner) {
   return result;
 }
 
+// Find a list of the files that belongs to the given user
 async function findUserFiles(owner) {
   const trackers = await FileTracker.find({
     owner: owner,
   }).select({ filename: 1 });
 
-  console.log(trackers);
   return trackers;
 }
 

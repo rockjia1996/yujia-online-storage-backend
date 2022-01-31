@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
+// Connect to the database
 function connectDB() {
   mongoose
     .connect("mongodb://localhost/yujia-online-storage-db")
@@ -24,6 +25,7 @@ const loginSchema = new mongoose.Schema({
 
 const Logger = mongoose.model("Login", loginSchema);
 
+// Create User in the Login collection
 async function createUser(username, password) {
   const saltRounds = 10;
   const hash = await bcrypt.hash(password, saltRounds);
@@ -41,8 +43,9 @@ async function verifyUser(username, password) {
   const user = await Logger.find({
     username: username,
   });
-  const result = await bcrypt.compare(password, user[0].password);
-  return result;
+
+  if (user.length === 0) return false;
+  else return await bcrypt.compare(password, user[0].password);
 }
 
 // Delete user from the database

@@ -3,6 +3,7 @@ const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
 const upload = require("./uploadAPIs");
 const logger = require("./loginAPIs");
+const register = require("./registerAPIs");
 
 const server = express();
 const port = process.env.PORT || 3333;
@@ -51,9 +52,10 @@ server.use(express.urlencoded({ extended: true }));
 // Serve the static files (css, js, image, etc)
 server.use(express.static("public"));
 
-// Two routers that handle upload and login.
+// Three routers that handle upload, login, and register.
 server.use(upload);
 server.use(logger);
+server.use(register);
 
 /*
   Middleware isAuth()
@@ -82,6 +84,11 @@ server.get("/", (req, res) => {
 // Login page route
 server.get("/login", (req, res) => {
   res.sendFile(__dirname + "/views/login.html");
+});
+
+// Register page route
+server.get("/register", (req, res) => {
+  res.sendFile(__dirname + "/views/register.html");
 });
 
 /*

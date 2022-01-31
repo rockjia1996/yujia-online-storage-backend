@@ -1,6 +1,6 @@
 const express = require("express");
 const fs = require("fs");
-const validateLogin = require("./inputValidation");
+const inputValidation = require("./inputValidation");
 const loginHandler = require("./loginHandler");
 
 const router = express.Router();
@@ -13,14 +13,19 @@ const router = express.Router();
 */
 router.post("/api/validate", async (req, res) => {
   const user = req.body;
-  const valid = validateLogin(user);
+  const valid = inputValidation.validateLogin(user);
 
+  // If the format is correct, check the password against database
   if (valid) {
     const result = await loginHandler.verifyUser(user.username, user.password);
+
+    // If the username and password is valid
     if (result) {
+      // Store the session cookie in the client
       req.session.isAuth = true;
       req.session.username = user.username;
 
+      // Create a user folder to store, the user's files
       fs.mkdirSync(`upload/${req.session.username}`, { recursive: true });
       res.redirect("/upload");
     } else {
