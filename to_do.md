@@ -1,0 +1,28 @@
+# To Do List
+
+## inputValidation.js
+
+-[ ] Handling the empty user input. <br> -[ ] Handling user's first and last name. <br> -[ ] Handling user's email. <br>
+
+## loginAPIs.js
+
+-[ ] Handling the creation of unique username.<br> -[ ] Async solution to the intitalization of user's upload folder. <br>
+
+## public/js/upload1.js
+
+-[ ] Some basic error handlings on register and login. Such as
+false login info, none repeated password, empty input.
+
+-[ ] Replace with Axio once it's time<br>
+
+## registerAPIs.js
+
+-[ ] Adding more input fields, first and last name, email. <br> -[x] Enforce the unique username. <br> -[x] Handling the empty input. <br>
+
+## views/register.html
+
+-[ ] Add first and last name fields <br> -[ ] Add email fields. <br>
+
+## views/upload.html
+
+-[ ] Replace the whole thing with React.js based frontend. <br>

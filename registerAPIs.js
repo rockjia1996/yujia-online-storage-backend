@@ -16,10 +16,13 @@ router.post("/api/register", async (req, res) => {
     });
 
     if (result) {
-      await loginHandler.createUser(username, password);
-      res.redirect("/login");
-    } else res.redirect("/register");
-  } else res.redirect("/register");
+      const isSuccess = await loginHandler.createUser(username, password);
+
+      if (isSuccess) res.redirect("/login");
+    }
+  }
+
+  res.redirect("/register");
 });
 
 module.exports = router;

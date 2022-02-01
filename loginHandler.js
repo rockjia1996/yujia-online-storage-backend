@@ -19,8 +19,8 @@ connectDB();
 
 // The schema for a user document
 const loginSchema = new mongoose.Schema({
-  username: String,
-  password: String,
+  username: { type: String, require: true, unique: true },
+  password: { type: String, require: true },
 });
 
 const Logger = mongoose.model("Login", loginSchema);
@@ -35,7 +35,13 @@ async function createUser(username, password) {
     password: hash,
   });
 
-  return await user.save();
+  try {
+    const result = await user.save();
+    return result;
+  } catch (err) {
+    // Anything goes wrong return null to the caller
+    return null;
+  }
 }
 
 // Verify the provided information against database
@@ -54,7 +60,7 @@ async function deleteUser(username) {
   return await Logger.deleteOne(user._id);
 }
 
-//createUser("guest", "123");
+//createUser("", "123");
 //verifyUser("guest", "123");
 //deleteUser("guest");
 
