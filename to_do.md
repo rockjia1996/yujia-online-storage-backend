@@ -29,4 +29,4 @@ false login info, none repeated password, empty input.
 
 ## loginHandler.js
 
--[ ] Update the Login model, by adding email field (need to unique)
+-[x] Update the Login model, by adding email field (need to unique)
