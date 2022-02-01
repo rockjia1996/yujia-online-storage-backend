@@ -21,7 +21,7 @@ false login info, none repeated password, empty input.
 
 ## views/register.html
 
--[ ] Add first and last name fields <br> -[ ] Add email fields. <br>
+-[x] Add first and last name fields <br> -[x] Add email fields. <br>
 
 ## views/upload.html
 
