@@ -21,18 +21,20 @@ connectDB();
 const loginSchema = new mongoose.Schema({
   username: { type: String, require: true, unique: true },
   password: { type: String, require: true },
+  email: { type: String, require: true, unique: true },
 });
 
 const Logger = mongoose.model("Login", loginSchema);
 
 // Create User in the Login collection
-async function createUser(username, password) {
+async function createUser(username, password, email) {
   const saltRounds = 10;
   const hash = await bcrypt.hash(password, saltRounds);
 
   const user = new Logger({
     username: username,
     password: hash,
+    email: email,
   });
 
   try {
@@ -40,7 +42,8 @@ async function createUser(username, password) {
     return result;
   } catch (err) {
     // Anything goes wrong return null to the caller
-    return null;
+    console.log(err.message);
+    return false;
   }
 }
 
