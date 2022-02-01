@@ -17,7 +17,7 @@ false login info, none repeated password, empty input.
 
 ## registerAPIs.js
 
--[ ] Adding more input fields, first and last name, email. <br> -[x] Enforce the unique username. <br> -[x] Handling the empty input. <br>
+-[x] Adding more input fields, first and last name, email. <br> -[x] Enforce the unique username. <br> -[x] Handling the empty input. <br>
 
 ## views/register.html
 
