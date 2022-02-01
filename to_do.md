@@ -2,11 +2,11 @@
 
 ## inputValidation.js
 
--[ ] Handling the empty user input. <br> -[ ] Handling user's first and last name. <br> -[ ] Handling user's email. <br>
+-[ ] Handling the empty user input, error handling . <br> -[ ] Handling user's first and last name. <br> -[ ] Handling user's email. <br>
 
 ## loginAPIs.js
 
--[ ] Handling the creation of unique username.<br> -[ ] Async solution to the intitalization of user's upload folder. <br>
+-[ ] Async solution to the intitalization of user's upload folder. <br>
 
 ## public/js/upload1.js
 
