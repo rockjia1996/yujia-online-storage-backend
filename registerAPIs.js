@@ -8,21 +8,19 @@ router.post("/api/register", async (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
   const repeatPassword = req.body.repeatPassword;
+  const email = req.body.email;
 
-  if (password === repeatPassword) {
-    const result = inputValidation.validateRegister({
-      username: username,
-      password: password,
-    });
+  const result = inputValidation.validateRegister({
+    username: username,
+    password: password,
+    repeatPassword: repeatPassword,
+    email: email,
+  });
 
-    if (result) {
-      const isSuccess = await loginHandler.createUser(username, password);
-
-      if (isSuccess) res.redirect("/login");
-    }
-  }
-
-  res.redirect("/register");
+  if (result) {
+    const isSuccess = await loginHandler.createUser(username, password);
+    if (isSuccess) res.redirect("/login");
+  } else res.redirect("/register");
 });
 
 module.exports = router;

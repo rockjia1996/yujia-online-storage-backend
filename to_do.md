@@ -2,7 +2,7 @@
 
 ## inputValidation.js
 
--[ ] Handling the empty user input, error handling . <br> -[ ] Handling user's first and last name. <br> -[ ] Handling user's email. <br>
+-[x] Handling the empty user input, error handling .<br> -[x] Handling user's email. <br>
 
 ## loginAPIs.js
 
@@ -26,3 +26,7 @@ false login info, none repeated password, empty input.
 ## views/upload.html
 
 -[ ] Replace the whole thing with React.js based frontend. <br>
+
+## loginHandler.js
+
+-[ ] Update the Login model, by adding email field (need to unique)
