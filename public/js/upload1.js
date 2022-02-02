@@ -1,8 +1,9 @@
+localStorage.clear();
 const submitButton = document.getElementById("submitFetch");
 submitButton.addEventListener("click", sendFile);
 
 async function getFileList() {
-  const list = await fetch("http://localhost:3333/api/upload/file-list", {
+  const list = await fetch("/api/upload/file-list", {
     method: "GET",
   })
     .then((response) => {
@@ -27,7 +28,7 @@ async function sendFile() {
   formData.append("upload-file", data);
 
   // In order for this to work, the input tag must not in the form tags
-  const response = await fetch("http://localhost:3333/api/upload", {
+  const response = await fetch("/api/upload", {
     method: "POST",
     header: {
       "Content-Type": "multipart/form-data",
@@ -86,7 +87,7 @@ function deleteUI(component) {
 
 // Request the server to remove the given user file
 async function deleteFile(filename) {
-  await fetch(`http://localhost:3333/api/upload/delete/${filename}`, {
+  await fetch(`/api/upload/delete/${filename}`, {
     method: "DELETE",
   });
 }

@@ -6,7 +6,7 @@
 
 ## loginAPIs.js
 
--[ ] Async solution to the intitalization of user's upload folder. <br>
+-[x] Async solution to the intitalization of user's upload folder. <br>
 
 ## public/js/upload1.js
 

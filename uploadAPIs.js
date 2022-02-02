@@ -50,11 +50,13 @@ router.post(
   isSessionTimeout,
   upload.single("upload-file"),
   async (req, res) => {
-    const filename = req.file.originalname;
-    const owner = req.session.username;
-    const path = req.file.path;
+    if (req.file) {
+      const filename = req.file.originalname; // needs input validation here
+      const owner = req.session.username;
+      const path = req.file.path;
 
-    await trackingHandler.createTracker(filename, owner, path);
+      await trackingHandler.createTracker(filename, owner, path);
+    }
     res.send("ok");
   }
 );
@@ -68,9 +70,6 @@ router.get("/api/upload/file-list", isSessionTimeout, async (req, res) => {
   });
 
   res.json({ filenames: names });
-  //res.set("Content-Type", "text/plain");
-  //console.log(res.json());
-  //res.send(names);
 });
 
 // The route handles the deletion of the file
@@ -81,19 +80,22 @@ router.delete(
     const filename = req.params.filename;
     await trackingHandler.deleteTracker(filename, req.session.username);
     fs.unlink(`upload/${req.session.username}/${filename}`, (err) => {
-      if (err) console.log(err);
+      if (err) console.log("/api/upload/delete/:filename " + err);
     });
   }
 );
 
 // The route handles the download file
-router.get("/api/upload/download/:filename", async (req, res) => {
-  const filename = req.params.filename;
-
-  // Have to set Content-Disposition to attachment
-  // Otherwise the broswers will attempt to open it in a window
-  res.set("Content-Disposition", "attachment");
-  res.sendFile(__dirname + `/upload/${req.session.username}/${filename}`);
+router.get("/api/upload/download/:filename", isSessionTimeout, (req, res) => {
+  try {
+    const filename = req.params.filename;
+    // Have to set Content-Disposition to attachment
+    // Otherwise the broswers will attempt to open it in a window
+    res.set("Content-Disposition", "attachment");
+    res.sendFile(__dirname + `/upload/${req.session.username}/${filename}`);
+  } catch (error) {
+    console.log("Error occured during file downloading: " + error.message);
+  }
 });
 
 module.exports = router;

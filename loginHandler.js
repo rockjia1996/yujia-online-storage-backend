@@ -39,7 +39,7 @@ async function createUser(username, password, email) {
 
   try {
     const result = await user.save();
-    return result;
+    return true;
   } catch (err) {
     // Anything goes wrong return null to the caller
     console.log(err.message);

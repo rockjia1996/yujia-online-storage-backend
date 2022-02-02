@@ -25,9 +25,24 @@ router.post("/api/validate", async (req, res) => {
       req.session.isAuth = true;
       req.session.username = user.username;
 
-      // Create a user folder to store, the user's files
-      fs.mkdirSync(`upload/${req.session.username}`, { recursive: true });
-      res.redirect("/upload");
+      try {
+        // Check if the user's folder exists
+        await fs.promises.access(`upload/${req.session.username}`);
+        res.redirect("/upload");
+      } catch (error) {
+        // Create a user folder to store, the user's files
+        try {
+          const result = await fs.promises.mkdir(
+            `upload/${req.session.username}`,
+            {
+              recursive: true,
+            }
+          );
+          res.redirect("/upload");
+        } catch (err) {
+          console.log(err);
+        }
+      }
     } else {
       res.redirect("/login");
     }
