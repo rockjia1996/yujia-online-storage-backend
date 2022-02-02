@@ -1,32 +1,20 @@
 # To Do List
 
-## inputValidation.js
+## Tasks
 
--[x] Handling the empty user input, error handling .<br> -[x] Handling user's email. <br>
+### Long terms
 
-## loginAPIs.js
+-[] Replace frontend with React.js.
+-[] Test more on the file upload / download / deletion.
+There seem to be a directory not found error pops
+up randomly. Try to catch the bug.
+-[] Considering / Experimenting more customized middlewares with express
+and mongoose to optmize the pipeline.
 
--[x] Async solution to the intitalization of user's upload folder. <br>
+### Short terms
 
-## public/js/upload1.js
-
--[ ] Some basic error handlings on register and login. Such as
-false login info, none repeated password, empty input.
-
--[ ] Replace with Axio once it's time<br>
-
-## registerAPIs.js
-
--[x] Adding more input fields, first and last name, email. <br> -[x] Enforce the unique username. <br> -[x] Handling the empty input. <br>
-
-## views/register.html
-
--[x] Add first and last name fields <br> -[x] Add email fields. <br>
-
-## views/upload.html
-
--[ ] Replace the whole thing with React.js based frontend. <br>
-
-## loginHandler.js
-
--[x] Update the Login model, by adding email field (need to unique)
+-[] Replace the path literal with the actual built-in path object
+(the current implemention is mad ugly and not portable to windows)
+-[] Add constraint on the size of the files.
+-[] Simulate the bad network connection from the client-end. See
+if any bug that may cause.
