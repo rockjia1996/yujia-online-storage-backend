@@ -51,6 +51,7 @@ router.post(
   upload.single("upload-file"),
   async (req, res) => {
     if (req.file) {
+      // Needs to add validation here
       const filename = req.file.originalname; // needs input validation here
       const owner = req.session.username;
       const path = req.file.path;

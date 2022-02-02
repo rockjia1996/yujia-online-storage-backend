@@ -18,3 +18,8 @@
 - [] Add constraint on the size of the files.
 - [] Simulate the bad network connection from the client-end. See
   if any bug that may cause.
+- [] Decouple that user-provided filename with file creation.
+  In the case that malicious user send a filename as a route.
+  The Filetrack should track the user given name of the file,
+  but when it stores the file, it uses its internal assigned name.
+  So the malicious filename won't interfer with the flow of server.
