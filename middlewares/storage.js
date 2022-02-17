@@ -11,7 +11,7 @@ const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     const saveLocation = path.resolve(
       "..",
-      "experiment_server",
+      "yujia-online-storage-backend",
       "storage",
       req.user.id,
       ""

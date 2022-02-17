@@ -52,7 +52,7 @@ router.post("/api/register", async (req, res) => {
   // Create a folder to save the client's uploads
   const userFolder = path.resolve(
     "..",
-    "experiment_server",
+    "yujia-online-storage-backend",
     "storage",
     user._id.toString()
   );

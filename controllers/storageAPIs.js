@@ -100,7 +100,7 @@ router.post(
       const owner = req.user.email;
       const saveLocation = path.resolve(
         "..",
-        "experiment_server",
+        "yujia-online-storage-backend",
         "storage",
         req.user.id.toString(),
         filename
@@ -153,7 +153,7 @@ router.delete("/api/delete", isAuthorize, async (req, res) => {
 
   const location = path.resolve(
     "..",
-    "experiment_server",
+    "yujia-online-storage-backend",
     "storage",
     req.user.id,
     req.body.filename
