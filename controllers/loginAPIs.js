@@ -42,7 +42,7 @@ router.post("/api/login", async (req, res) => {
 
   // Generate JWT with id and email
   const token = generateJWT({ id: user._id, email: details["email"] });
-  res.header("x-auth-token", token).send({ id: user._id, email: user.email });
+  res.send({ id: user._id, email: user.email, jwt: token });
 });
 
 module.exports = router;
