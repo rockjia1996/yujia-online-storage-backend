@@ -9,11 +9,13 @@ mongoose
 
 // Define the a tracker schema to specify
 // what to track
+
 const trackerSchema = new mongoose.Schema({
   filename: { type: String, require: true },
   path: { type: String, require: true },
   owner: { type: String, require: true },
-  date: { type: Date, default: Date.now },
+  size: { type: Number },
+  date: { type: Date, default: Date.now() },
   tags: [String],
   notes: { type: String, default: "" },
 });
@@ -23,13 +25,14 @@ const Tracker = mongoose.model("Tracker", trackerSchema);
 
 // Create a tracker to track the uploaded file
 async function createFileTracker(details) {
-  const { filename, path, owner, tags, notes } = details;
+  const { filename, path, owner, tags, notes, size } = details;
   const tracker = new Tracker({
     filename,
     path,
     owner,
     tags,
     notes,
+    size,
   });
 
   try {

@@ -40,7 +40,7 @@ router.post("/api/register", async (req, res) => {
   ]);
   const details = await validateRegister(inputs); // validation the inputs
 
-  if (!details) res.sendStatus(400);
+  if (!details) return res.sendStatus(400);
   details["password"] = await hashPassword(details["password"]); // hashing
 
   // Verify if the client already registered.

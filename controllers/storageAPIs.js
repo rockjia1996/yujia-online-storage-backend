@@ -32,7 +32,7 @@ router.get("/api/filelist", isAuthorize, async (req, res) => {
   // Query database to get all the trackers that belong to the client
   const trackers = await searchFileTrackers({ owner: req.user.email });
   const filtered = trackers.map((tracker) => {
-    return _.pick(tracker, "_id", "filename", "tags", "date", "notes");
+    return _.pick(tracker, "_id", "filename", "tags", "date", "notes", "size");
   });
   res.send(filtered);
 });
@@ -55,17 +55,17 @@ router.get("/api/filelist", isAuthorize, async (req, res) => {
     file to the client.
 
 */
-router.get("/api/download", isAuthorize, async (req, res) => {
+router.get("/api/download/:filename", isAuthorize, async (req, res) => {
   // Check if filename is provided
-  const filename = req.body.filename;
+  const filename = req.params.filename;
+
   if (!filename) return res.sendStatus(400);
 
   // Check against the database
-  const filter = { filename: req.body.filename, owner: req.user.email };
+  const filter = { filename: filename, owner: req.user.email };
   const trackers = await searchFileTrackers(filter);
   if (trackers.length !== 1) return res.sendStatus(400);
-
-  res.sendFile(trackers[0].path);
+  res.download(trackers[0].path);
 });
 
 /*
@@ -98,21 +98,28 @@ router.post(
     if (accepted) {
       const filename = req.file.originalname;
       const owner = req.user.email;
+      const size = req.file.size;
       const saveLocation = path.resolve(
-        "..",
-        "yujia-online-storage-backend",
+        ".",
         "storage",
         req.user.id.toString(),
         filename
       );
-      const details = { filename: filename, owner: owner, path: saveLocation };
+      const details = {
+        filename: filename,
+        owner: owner,
+        path: saveLocation,
+        size: size,
+      };
 
       // Check the file details against the database
       // If not tracker found, track it. Otherwise, send 400 to the client
       const results = await searchFileTrackers(details);
       if (results.length === 0) {
         const tracker = await createFileTracker(details);
-        res.send(tracker);
+        res.send(
+          _.pick(tracker, ["_id", "filename", "tags", "notes", "size", "date"])
+        );
       } else res.sendStatus(400);
     } else {
       res.sendStatus(400);
@@ -143,26 +150,17 @@ router.post(
 
 
 */
-router.delete("/api/delete", isAuthorize, async (req, res) => {
-  const filename = req.body.filename || false;
+router.delete("/api/delete/:filename", isAuthorize, async (req, res) => {
+  const filename = req.params.filename;
 
-  if (!filename) {
-    res.sendStatus(400);
-    return;
-  }
+  if (!filename) return res.sendStatus(400);
 
-  const location = path.resolve(
-    "..",
-    "yujia-online-storage-backend",
-    "storage",
-    req.user.id,
-    req.body.filename
-  );
+  const location = path.resolve(".", "storage", req.user.id, filename);
 
   // Before the deletion, verify if the request is valid
   // by checking with tracker database
   const result = await searchFileTrackers({
-    filename: req.body.filename,
+    filename: filename,
     owner: req.user.email,
     path: location,
   });
@@ -171,12 +169,12 @@ router.delete("/api/delete", isAuthorize, async (req, res) => {
 
   await deleteFile(location);
 
-  deleteFileTracker({
-    filename: req.body.filename,
+  const deletedTracker = await deleteFileTracker({
+    filename: filename,
     owner: req.user.email,
   });
 
-  res.sendStatus(200);
+  res.send(deletedTracker);
 });
 
 // Update the detials of a file
@@ -221,6 +219,7 @@ router.put("/api/update", isAuthorize, async (req, res) => {
     const filtered = _.pick(copy[0], [
       "_id",
       "filename",
+      "size",
       "tags",
       "notes",
       "date",
