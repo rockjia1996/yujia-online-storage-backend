@@ -9,13 +9,7 @@ const multer = require("multer");
 */
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    const saveLocation = path.resolve(
-      "..",
-      "yujia-online-storage-backend",
-      "storage",
-      req.user.id,
-      ""
-    );
+    const saveLocation = path.resolve(".", "storage", req.user.id);
     cb(null, saveLocation);
   },
   filename: function (req, file, cb) {
@@ -58,7 +52,7 @@ const upload = multer({
   storage: storage,
   fileFilter: fileFilter,
   limits: {
-    fileSize: 1024 * 1024 * 8, // 80 Mb limit
+    fileSize: 1024 * 1024 * 25, // 25 Mb limit
   },
 });
 

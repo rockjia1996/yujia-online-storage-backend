@@ -14,6 +14,7 @@ const {
 
 const { isAuthorize } = require("../middlewares/authorize");
 const { upload } = require("../middlewares/storage");
+const { isAvailable } = require("../middlewares/diskManagement");
 
 /* 
   Route: /api/filelist
@@ -88,7 +89,7 @@ router.get("/api/download/:filename", isAuthorize, async (req, res) => {
 */
 router.post(
   "/api/upload",
-  [isAuthorize, upload.single("uploaded_file")],
+  [isAuthorize, isAvailable, upload.single("uploaded_file")],
   async (req, res) => {
     // Check if there is any file. req.file is undefined only if the file does
     // not go though the filter in multer.
