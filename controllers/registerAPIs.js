@@ -56,6 +56,11 @@ router.post("/api/register", async (req, res) => {
     "storage",
     user._id.toString()
   );
+
+  const testFolder = path.resolve(".", "storage", user._id.toString());
+  console.log("userFolder: ", userFolder);
+  console.log("testFolder: ", testFolder);
+
   if (user) await createFolder(userFolder);
   res.send(_.pick(user, ["_id", "username", "email"]));
 });
