@@ -6,7 +6,9 @@ const dataBaseURL =
 
 mongoose
   .connect(dataBaseURL)
-  .then(() => console.log("(user.js) Connected to MongoDB ..."))
+  .then(() =>
+    console.log(`(user.js) Connected to MongoDB with ${dataBaseURL}...`)
+  )
   .catch((error) => console.log(error.message));
 
 const userSchema = new mongoose.Schema({

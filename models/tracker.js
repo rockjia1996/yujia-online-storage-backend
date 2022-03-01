@@ -8,7 +8,9 @@ const dataBaseURL =
 // Connect to the MongoDB database
 mongoose
   .connect(dataBaseURL)
-  .then(() => console.log("(tracker.js) Connected to MongoDB ..."))
+  .then(() =>
+    console.log(`(tracker.js) Connected to MongoDB with ${dataBaseURL} ...`)
+  )
   .catch((error) => console.log(error.message));
 
 // Define the a tracker schema to specify
