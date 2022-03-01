@@ -1,7 +1,11 @@
 const mongoose = require("mongoose");
 
+// URL configation
+const dataBaseURL =
+  process.env.storage_db || "mongodb://localhost:27017/my-online-storage-app";
+
 mongoose
-  .connect("mongodb://localhost:27017/my-online-storage-app")
+  .connect(dataBaseURL)
   .then(() => console.log("(user.js) Connected to MongoDB ..."))
   .catch((error) => console.log(error.message));
 

@@ -1,9 +1,13 @@
 const res = require("express/lib/response");
 const mongoose = require("mongoose");
 
+// URL configation
+const dataBaseURL =
+  process.env.storage_db || "mongodb://localhost:27017/my-online-storage-app";
+
 // Connect to the MongoDB database
 mongoose
-  .connect("mongodb://localhost:27017/my-online-storage-app")
+  .connect(dataBaseURL)
   .then(() => console.log("(tracker.js) Connected to MongoDB ..."))
   .catch((error) => console.log(error.message));
 
