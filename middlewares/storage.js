@@ -22,7 +22,7 @@ const storage = multer.diskStorage({
   file before saving.
 
   Here, a valid file is
-    1. No greater than 80 Mb.
+    1. No greater than 10 Mb.
     2. Filename contains only alphabet, digits, and dash "-".
     3. Length of the filename is no longer than 140 character.
 
@@ -52,7 +52,7 @@ const upload = multer({
   storage: storage,
   fileFilter: fileFilter,
   limits: {
-    fileSize: 1024 * 1024 * 25, // 25 Mb limit
+    fileSize: 1024 * 1024 * 10, // 10 Mb limit
   },
 });
 
