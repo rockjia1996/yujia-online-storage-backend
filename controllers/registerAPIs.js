@@ -50,16 +50,7 @@ router.post("/api/register", async (req, res) => {
   const user = await createUser(details);
 
   // Create a folder to save the client's uploads
-  const userFolder = path.resolve(
-    "..",
-    "yujia-online-storage-backend",
-    "storage",
-    user._id.toString()
-  );
-
-  const testFolder = path.resolve(".", "storage", user._id.toString());
-  console.log("userFolder: ", userFolder);
-  console.log("testFolder: ", testFolder);
+  const userFolder = path.resolve(".", "storage", user._id.toString());
 
   if (user) await createFolder(userFolder);
   res.send(_.pick(user, ["_id", "username", "email"]));
